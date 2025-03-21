@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartGamePanel : MonoBehaviour
+public class MainGamePanel : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Button StartGameBtn;
-    
+    // Start is called before the first frame update
     void Start()
     {
-        StartGameBtn.onClick.AddListener(StartGameClick);
+        StartGameBtn.onClick.AddListener(StartGame);
     }
 
     // Update is called once per frame
@@ -19,8 +18,9 @@ public class StartGamePanel : MonoBehaviour
         
     }
 
-    public void StartGameClick()
+    void StartGame()
     {
         GameManager.Instance.LoadScene_03_Main();
     }
+
 }
