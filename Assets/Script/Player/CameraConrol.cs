@@ -24,7 +24,7 @@ public class CameraConrol : MonoBehaviour
     private readonly Vector3[] _offsets = 
     {
         new Vector3(0,3f,-5f),
-        new Vector3(0,10f,1.7f)
+        new Vector3(0,15f,5f)
     };
 
     void Start()
