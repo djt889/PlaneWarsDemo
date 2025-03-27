@@ -1,18 +1,20 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
+    // 定义子弹的预制体
+    public GameObject bulletPrefab;
+
+    // 定义子弹发射的位置
+    public GameObject shotPos;
+
     // 定义飞机的速度
     private readonly float _speed = 4f;
-    public GameObject bulletPrefab;
-    public GameObject shotPos;
-    private float _jtimer = 0;
-    private float _ktimer = 0;
-    private float _fireFrequency = 0.3f;
+
+    // 定义J键和K键的按键间隔
+    private readonly KeyInterval _jkey = new(KeyCode.J, 0.2f);
+    private readonly KeyInterval _kkey = new(KeyCode.K, 0.2f);
+
 
     private void Start()
     {
@@ -20,10 +22,12 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
+        // 调用射击和移动方法
         Fire();
         Move();
     }
 
+    // 移动飞机
     private void Move()
     {
         // 获取水平和垂直方向的输入
@@ -45,48 +49,29 @@ public class PlayerControl : MonoBehaviour
     private void Fire()
     {
         // 发射子弹
-        KeyInvoke(KeyCode.J, 
-            _fireFrequency,
-            ref _jtimer,
+        _jkey.KeyInvoke(
+            () => { Instantiate(bulletPrefab, shotPos.transform.position, Quaternion.identity); },
+            null);
+
+        _kkey.KeyInvoke(
             () =>
             {
-                Instantiate(bulletPrefab, shotPos.transform.position, Quaternion.identity);
-            }, 
+                Shrapnel();
+            },
             null);
-        
-        KeyInvoke(KeyCode.K, 
-            _fireFrequency,
-            ref _ktimer,
-            () =>
-            {
-                Instantiate(bulletPrefab, shotPos.transform.position + new Vector3(1,0,0), Quaternion.identity);
-                Instantiate(bulletPrefab, shotPos.transform.position + new Vector3(-1,0,0), Quaternion.identity);
-            }, 
-            null);
-        
     }
 
+    private int _bulletnum = 4;
+    private float _angle = 50;
 
-    private void KeyInvoke(KeyCode keyCode, float invoke,ref float invokeTimer, Action action, Action actionUp)
+    private void Shrapnel()
     {
-        if (Input.GetKey(keyCode))
-        {
-            invokeTimer += Time.deltaTime;
-            if (invokeTimer >= invoke)
-            {
-                action();
-                invokeTimer = 0;
-            }
-        }
-
-        if (Input.GetKeyUp(keyCode))
-        {
-            invokeTimer = _fireFrequency;
-            if (actionUp != null)
-            {
-                actionUp();
-            }
-        }
+        float inteal = _angle / _bulletnum;
         
+        for (float i = -_angle / 2 ; i <= _angle / 2 ; i += inteal)
+        {
+            Instantiate(bulletPrefab, shotPos.transform.position, Quaternion.Euler(0, i, 0));
+        }
     }
+
 }

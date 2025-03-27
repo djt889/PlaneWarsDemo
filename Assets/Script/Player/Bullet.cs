@@ -23,11 +23,11 @@ public class Bullet : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        
-        transform.position += new Vector3(0, 0, _speed) * Time.deltaTime;
-        
-        
-        
+
+        transform.Translate(new Vector3(0, 0, _speed) * Time.deltaTime);
+
     }
+
+    
 
 }

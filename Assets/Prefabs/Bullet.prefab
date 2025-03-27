@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6358160291721516170}
   - component: {fileID: 7890095781884542548}
+  - component: {fileID: 5402861339429174136}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,6 +46,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b9c4bbfcdce174683bd063760c184a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &5402861339429174136
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977493990303982383}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.020152947, y: 0.016043834, z: 0.03641875}
+  m_Center: {x: -0.00024879476, y: -0.00058038137, z: 0.006276866}
 --- !u!1 &8793882616243245777
 GameObject:
   m_ObjectHideFlags: 0
