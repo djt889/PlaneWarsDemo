@@ -3,8 +3,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     // Start is called before the first frame update
-    private readonly float _speed = 50f;
-    private float _timer;
+    public float speed = 50f; // 子弹的速度
+    private float _timer; // 计时器
 
     private void Start()
     {
@@ -18,13 +18,13 @@ public class Bullet : MonoBehaviour
 
     private void BulletMove()
     {
-        _timer += Time.deltaTime;
-        if (_timer > 8)
+        _timer += Time.deltaTime; // 每帧增加时间
+        if (_timer > 8) // 如果时间超过8秒
         {
-            Destroy(this.gameObject);
+            Destroy(this.gameObject); // 销毁子弹
         }
 
-        transform.Translate(new Vector3(0, 0, _speed) * Time.deltaTime);
+        transform.Translate(new Vector3(0, 0, speed) * Time.deltaTime); // 子弹向前移动
 
     }
 
