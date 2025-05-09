@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4207849161835370782}
   - component: {fileID: 2495505506963959997}
   - component: {fileID: 9020557095748867568}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 6132545515863572783}
   - component: {fileID: 7181482974270594115}
   - component: {fileID: -8936673141964718202}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RedSphereBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

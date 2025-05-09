@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-// ·½Ïò
+// æ–¹å‘
 public enum DRI
 {
     FORNT = 0,
@@ -13,18 +13,20 @@ public enum DRI
     LEFT,
     RIGHT,
 }
+
 public class RaySix
 {
-    // ÉäÏß¾àÀëÎïÌå·¢³öÖĞĞÄµÄÆ«ÒÆÁ¿£»
+    // å°„çº¿èµ·å§‹ç‚¹ç›¸å¯¹äºä¸­å¿ƒçš„åç§»é‡
     public Vector3 offset;
-    // ³¤¶È £ºÇ°¡¢ºó¡¢ÉÏ¡¢ÏÂ¡¢×ó¡¢ÓÒ
+    // å…­æ¡å°„çº¿çš„è·ç¦»æ•°ç»„ï¼Œå¯¹åº”å‰ã€åã€ä¸Šã€ä¸‹ã€å·¦ã€å³
     public float[] distances;
-    // ÉäÏß
+    // å°„çº¿
     public Ray front, after, up, down, left, right;
-    // ·½Ïò
+    // å°„çº¿æ–¹å‘
     public Vector3 frontDir, afterDir, upDir, downDir, leftDir, rightDir;
-    // ÑÕÉ«
+    // é¢œè‰²
     public Color color;
+
     public RaySix(Vector3 offset, float[] distances, Color color)
     {
         this.offset = offset;
@@ -32,35 +34,41 @@ public class RaySix
         this.color = color;
     }
 }
+
 public class RaySixDirCollision
 {
-    // ¾àÀëµÄ¼¯ºÏ
+    // å­˜å‚¨å¤šä¸ªå…­æ–¹å‘å°„çº¿ç»„
     private List<RaySix> raySixeList = new List<RaySix>();
-    // ·½Ïò×ø±êÓëÏòÁ¿
+    // å±‚è¿‡æ»¤
     private int layerMask = 0;
+
     /// <summary>
-    /// È·¶¨±ÜÃâ²ãÊı
+    /// è®¾ç½®å±‚è¿‡æ»¤
     /// </summary>
-    /// <param name="layerMask"></param>
+    /// <param name="layerMask">è¦æ£€æµ‹çš„å±‚</param>
     public RaySixDirCollision(int layerMask)
     {
         this.layerMask = layerMask;
     }
+
     /// <summary>
-    /// Ôö¼ÓÉäÏß²ãÊı
+    /// æ·»åŠ å°„çº¿å±‚
     /// </summary>
-    /// <param name="distances"></param>
+    /// <param name="offset">åç§»é‡</param>
+    /// <param name="dis">åˆå§‹è·ç¦»</param>
+    /// <param name="color">é¢œè‰²</param>
     public void AddRayLayer(Vector3 offset, float dis, Color color)
     {
         float[] diss = { dis, dis, dis, dis, dis, dis };
         raySixeList.Add(new RaySix(offset, diss, color));
     }
+
     /// <summary>
-    /// ÉèÖÃ¾àÀë
+    /// è®¾ç½®æŒ‡å®šå±‚å’Œæ–¹å‘çš„è·ç¦»
     /// </summary>
-    /// <param name="layer"></param>
-    /// <param name="dRI"></param>
-    /// <param name="dis"></param>
+    /// <param name="layer">å±‚æ•°</param>
+    /// <param name="dRI">æ–¹å‘</param>
+    /// <param name="dis">è·ç¦»</param>
     public void SetDistance(int layer, DRI dRI, float dis)
     {
         try
@@ -71,14 +79,16 @@ public class RaySixDirCollision
         {
             Debug.Log(e);
             throw;
-        } 
-    } 
+        }
+    }
+
     public void RaySixDirCollisionUpdate(Transform transform, bool isDrawLine = true)
     {
         CreateSixDirRay(transform);
         UpdatePosition(transform);
         if (isDrawLine) DrawRayLine(transform);
     }
+
     private void UpdatePosition(Transform transform)
     {
         foreach (RaySix item in raySixeList)
@@ -91,9 +101,11 @@ public class RaySixDirCollision
             item.rightDir = transform.TransformDirection(new Vector3(1, 0, 0));
         }
     }
+
     private Vector3 centerPos;
+
     /// <summary>
-    /// ´´½¨Áù¸ö·½ÏòµÄÉäÏß¡£
+    /// åˆ›å»ºå…­ä¸ªæ–¹å‘çš„å°„çº¿
     /// </summary>
     /// <param name="transform"></param>
     private void CreateSixDirRay(Transform transform)
@@ -109,12 +121,11 @@ public class RaySixDirCollision
             item.right = new Ray(centerPos, item.rightDir);
         }
     }
+
     private void DrawRayLine(Transform transform)
     {
-
         foreach (RaySix item in raySixeList)
         {
-            // »­Ïß²âÊÔDebug.DrawLine(ÆğÊ¼µã£¬½áÊøµã);
             centerPos = transform.position + transform.TransformDirection(item.offset);
             Debug.DrawLine(centerPos, centerPos + item.frontDir * item.distances[0], item.color);
             Debug.DrawLine(centerPos, centerPos + item.afterDir * item.distances[1], item.color);
@@ -124,10 +135,11 @@ public class RaySixDirCollision
             Debug.DrawLine(centerPos, centerPos + item.rightDir * item.distances[5], item.color);
         }
     }
+
     /// <summary>
-    /// Áù¸ö·½ÏòµÄÉäÏß¼ì²â
+    /// å…­ä¸ªæ–¹å‘å°„çº¿æ£€æµ‹é€»è¾‘
     /// </summary>
-    /// <param name="action"></param>
+    /// <param name="action">æˆåŠŸå›è°ƒ</param>
     public void SixRaycast(Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         ForntRaycast(success, fail);
@@ -137,8 +149,10 @@ public class RaySixDirCollision
         LeftRaycast(success, fail);
         RightRaycast(success, fail);
     }
-    #region Áù¸ö·½Ïò·Ö¿ª¼ì²â
-    // Ç°
+
+    #region å…­ä¸ªæ–¹å‘åˆ†åˆ«æ£€æµ‹
+
+    // å‰
     public void ForntRaycast(Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         foreach (RaySix item in raySixeList)
@@ -146,11 +160,7 @@ public class RaySixDirCollision
             Raycast(item.front, item.distances[0], DRI.FORNT, success, fail);
         }
     }
-    /// <summary>
-    /// ·Ö²ã¼ì²â
-    /// </summary>
-    /// <param name="success"></param>
-    /// <param name="fail"></param>
+
     public void ForntRaycastToLayer(int Layer, Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         try
@@ -161,9 +171,10 @@ public class RaySixDirCollision
         {
             Debug.Log(e);
             throw;
-        }   
+        }
     }
-    // ºó
+
+    // å
     public void AfterRaycast(Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         foreach (RaySix item in raySixeList)
@@ -171,6 +182,7 @@ public class RaySixDirCollision
             Raycast(item.after, item.distances[1], DRI.AFTER, success, fail);
         }
     }
+
     public void AfterRaycastToLayer(int Layer, Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         try
@@ -183,7 +195,8 @@ public class RaySixDirCollision
             throw;
         }
     }
-    // ÉÏ
+
+    // ä¸Š
     public void UpRaycast(Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         foreach (RaySix item in raySixeList)
@@ -191,6 +204,7 @@ public class RaySixDirCollision
             Raycast(item.up, item.distances[2], DRI.UP, success, fail);
         }
     }
+
     public void UpRaycasttToLayer(int Layer, Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         try
@@ -203,7 +217,8 @@ public class RaySixDirCollision
             throw;
         }
     }
-    // ÏÂ
+
+    // ä¸‹
     public void DownRaycast(Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         foreach (RaySix item in raySixeList)
@@ -211,6 +226,7 @@ public class RaySixDirCollision
             Raycast(item.down, item.distances[3], DRI.DOWN, success, fail);
         }
     }
+
     public void DownRaycastToLayer(int Layer, Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         try
@@ -223,7 +239,8 @@ public class RaySixDirCollision
             throw;
         }
     }
-    // ×ó
+
+    // å·¦
     public void LeftRaycast(Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         foreach (RaySix item in raySixeList)
@@ -231,6 +248,7 @@ public class RaySixDirCollision
             Raycast(item.left, item.distances[4], DRI.LEFT, success, fail);
         }
     }
+
     public void LeftRaycastToLayer(int Layer, Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         try
@@ -243,7 +261,8 @@ public class RaySixDirCollision
             throw;
         }
     }
-    // ÓÒ
+
+    // å³
     public void RightRaycast(Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         foreach (RaySix item in raySixeList)
@@ -251,6 +270,7 @@ public class RaySixDirCollision
             Raycast(item.right, item.distances[5], DRI.RIGHT, success, fail);
         }
     }
+
     public void RightRaycastToLayer(int Layer, Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         try
@@ -263,9 +283,10 @@ public class RaySixDirCollision
             throw;
         }
     }
+
     #endregion
 
-    // ÉäÏß¼ì²âÍ¨ÓÃ·½·¨£¬
+    // å°„çº¿æ£€æµ‹é€šç”¨æ–¹æ³•
     public void Raycast(Ray ray, float distance, DRI dRI, Action<DRI, RaycastHit> success, Action<DRI, RaycastHit> fail)
     {
         RaycastHit hit;

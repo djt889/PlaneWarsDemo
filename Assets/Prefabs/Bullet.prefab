@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6358160291721516170}
-  - component: {fileID: 7890095781884542548}
   - component: {fileID: 5402861339429174136}
-  m_Layer: 0
+  - component: {fileID: 7890095781884542548}
+  m_Layer: 9
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -34,18 +34,6 @@ Transform:
   - {fileID: 8161073420303927403}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7890095781884542548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7977493990303982383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6b9c4bbfcdce174683bd063760c184a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &5402861339429174136
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -67,6 +55,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.020152947, y: 0.016043834, z: 0.03641875}
   m_Center: {x: -0.00024879476, y: -0.00058038137, z: 0.006276866}
+--- !u!114 &7890095781884542548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977493990303982383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b9c4bbfcdce174683bd063760c184a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 50
 --- !u!1 &8793882616243245777
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,7 +79,7 @@ GameObject:
   - component: {fileID: 8161073420303927403}
   - component: {fileID: 5111073875149850574}
   - component: {fileID: 6992640884441805572}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: lansejiantouzidan
   m_TagString: Untagged
   m_Icon: {fileID: 0}

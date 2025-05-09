@@ -9,7 +9,7 @@ public class PlayerControl : MonoBehaviour
     public GameObject shotPos;
 
     // 定义飞机的速度
-    private readonly float _speed = 4f;
+    private readonly float _speed = 5f;
 
     // 定义J键和K键的按键间隔
     private readonly KeyInterval _jkey = new(KeyCode.J, 0.2f);

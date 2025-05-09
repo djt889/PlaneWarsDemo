@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     public float speed = 50f; // 子弹的速度
     private float _timer; // 计时器
+    public float attack;
 
     private void Start()
     {
