@@ -24,7 +24,7 @@ public class Gamepanel : MonoBehaviour
             gameOverPanel.SetActive(true);
             playerControl.enabled = false;
             Time.timeScale = 0.3f;
-            Invoke("Stoptime",0.5f);
+            Invoke("Stoptime",1f);
         }
     }
 

@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
 
     //刚体组件
     private Rigidbody _rigidbody;
+    public GameObject explosionPrefab;
     
     void Start()
     {
@@ -142,26 +143,23 @@ public class Enemy : MonoBehaviour
     }
 
     //碰撞检测
-    private void OnCollisionEnter(Collision collider)
+    // 在 Enemy.cs 中添加以下方法
+    public void TakeDamage(float amount)
     {
-        //如果碰撞的物体是子弹
-        if (collider.gameObject.CompareTag("Bullet"))
+        _hp -= amount;
+        Debug.Log($"Enemy HP: {_hp}");
+
+        if (_hp <= 0)
         {
-            //销毁子弹
-            Destroy(collider.gameObject);
-            Debug.Log("OnTriggerEnter");
-            //计算伤害
-            _hp -= collider.gameObject.GetComponent<Bullet>().damage;
-            //
-            Debug.Log(_hp);
-            
+            Die();
         }
     }
+
 
     void Die()
     {
         _isDie = true; // 防止重复触发
-        
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         // 设置一个初始的旋转角速度
         _rigidbody.angularVelocity = new Vector3(0, 0, 5f); // 绕Z轴旋转
 

@@ -6,7 +6,6 @@ public class KeyInterval
     private readonly float _invoke; //间隔时间
     private float _invokeTimer; //间隔计时器
     private readonly KeyCode _keyCode; //按键
-    private float _timer = 0; //间隔时间
 
     //构造函数，初始化按键和间隔时间
     public KeyInterval(KeyCode keyCode, float invoke)

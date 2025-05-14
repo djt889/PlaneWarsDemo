@@ -2,33 +2,73 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public float speed = 50f; // 子弹的速度
-    private float _timer; // 计时器
-    public float damage = 20f; // 子弹的伤害
+    // 从 ProjectileMove 继承的功能
+    public float speed = 50f;                   // 子弹速度
+    public float fireRate = 0.2f;               // 发射频率（可配置）
+    public GameObject hitPrefab;                // 命中特效
+
+    // 新增：从原 Bullet.cs 中的属性
+    public float damage = 20f;                  // 子弹造成的伤害
+    private float _timer;                       // 计时器
+    private readonly float _destroyTime = 8f;              // 自动销毁时间
 
     private void Start()
     {
+        _timer = 0f;
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        BulletMove();
+        Move();
+        CheckDestroyTimer();
     }
 
-    private void BulletMove()
+    private void Move()
     {
-        _timer += Time.deltaTime; // 每帧增加时间
-        if (_timer > 8) // 如果时间超过8秒
-        {
-            Destroy(this.gameObject); // 销毁子弹
-        }
-
-        transform.Translate(new Vector3(0, 0, speed) * Time.deltaTime); // 子弹向前移动
-
+        transform.position += transform.forward * (speed * Time.deltaTime);
     }
 
-    
+    private void CheckDestroyTimer()
+    {
+        _timer += Time.deltaTime;
+        if (_timer >= _destroyTime)
+        {
+            Destroy(gameObject);
+        }
+    }
 
+    private void OnCollisionEnter(Collision co)
+    {
+        if (co.gameObject.CompareTag("Enemy"))
+        {
+            speed = 0;
+
+            ContactPoint contact = co.contacts[0];
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+            Vector3 pos = contact.point;
+
+            if (hitPrefab != null)
+            {
+                var hitVFX = Instantiate(hitPrefab, pos, rot);
+                var psHit = hitVFX.GetComponent<ParticleSystem>();
+                if (psHit != null)
+                {
+                    Destroy(hitVFX, psHit.main.duration);
+                }
+                else
+                {
+                    var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(hitVFX, psChild.main.duration);
+                }
+            }
+            
+            Enemy enemy = co.gameObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage); // 新增：调用敌人受伤方法
+            }
+            
+            Destroy(gameObject);
+        }
+    }
 }

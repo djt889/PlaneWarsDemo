@@ -13,12 +13,25 @@ public class PlayerControl : MonoBehaviour
     private readonly float _speed = 5f;
 
     // 定义J键和K键的按键间隔
-    private readonly KeyInterval _jkey = new(KeyCode.J, 0.2f);
-    private readonly KeyInterval _kkey = new(KeyCode.K, 0.2f);
+    private KeyInterval _jkey;
+    private KeyInterval _kkey;
 
+    //射击频率
+    private float _fireRate;
 
     private void Start()
     {
+        var bulletProject = bulletPrefab.GetComponent<Bullet>();
+        if (bulletPrefab != null)
+        {
+            _fireRate = bulletProject.GetComponent<Bullet>().fireRate;
+        }else
+        {
+            Debug.Log("子弹预制体为空");
+            _fireRate = 0.2f;
+        }
+        _jkey = new KeyInterval(KeyCode.J, _fireRate);
+        _kkey = new KeyInterval(KeyCode.K, _fireRate);
     }
 
     private void Update()
@@ -84,7 +97,7 @@ public class PlayerControl : MonoBehaviour
             Destroy(collider.gameObject);
             
             //计算伤害
-            hp -= collider.gameObject.GetComponent<Bullet>().damage;
+            hp -= collider.gameObject.GetComponent<EnemyBullet>().damage;
             //
             Debug.Log(hp);
             
