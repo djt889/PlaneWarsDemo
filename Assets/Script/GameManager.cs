@@ -16,12 +16,17 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }else
+        {
+            Destroy(gameObject);
         }
+        Time.timeScale = 1f;
     }
 
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
+        
         Init();
     }
 
@@ -50,7 +55,7 @@ public class GameManager : MonoBehaviour
         
         public void LoadScene_03_Main()
         {
-            SceneManager.LoadScene("_03_Main");
+            SceneManager.LoadScene("_03_Battle01");
         }
         
     #endregion

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
+    public float hp = 100;
     // 定义子弹的预制体
     public GameObject bulletPrefab;
 
@@ -71,6 +72,22 @@ public class PlayerControl : MonoBehaviour
         for (float i = -_angle / 2 ; i <= _angle / 2 ; i += inteal)
         {
             Instantiate(bulletPrefab, shotPos.transform.position, Quaternion.Euler(0, i, 0));
+        }
+    }
+    
+    private void OnCollisionEnter(Collision collider)
+    {
+        //如果碰撞的物体是敌人子弹
+        if (collider.gameObject.CompareTag("EnemyBullet"))
+        {
+            //销毁子弹
+            Destroy(collider.gameObject);
+            
+            //计算伤害
+            hp -= collider.gameObject.GetComponent<Bullet>().damage;
+            //
+            Debug.Log(hp);
+            
         }
     }
 

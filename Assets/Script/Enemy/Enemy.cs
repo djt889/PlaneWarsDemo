@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -31,7 +28,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         //初始化敌人的血量、攻击力和速度
-        init(200,10,0.5f);
+        Init(200,10,0.5f);
         //获取敌人的刚体组件
         _rigidbody = GetComponent<Rigidbody>();
         RaySixDirCollision = new RaySixDirCollision(~(1 << 9));
@@ -41,20 +38,33 @@ public class Enemy : MonoBehaviour
     }
 
     //初始化敌人的血量、攻击力和速度
-    public void init(float hp,float attack, float speed)
+    public void Init(float hp,float attack, float speed)
     {
         _hp = hp;
         _attack = attack;
         _speed = speed;
     }
-
+    
+    private bool _isDie ;
+    private readonly float _timer = 3;
     void Update()
     {
-        //移动
-        Move();
-        //攻击
-        Attack();
-        RayCheck();
+        
+        if (_hp<= 0 && !_isDie)
+        {
+            Die();
+        }
+        
+        if (!_isDie)
+        {
+            
+            //移动
+            Move();
+            //攻击
+            Attack();
+            RayCheck();
+            
+        }
         
     }
 
@@ -140,15 +150,37 @@ public class Enemy : MonoBehaviour
             //销毁子弹
             Destroy(collider.gameObject);
             Debug.Log("OnTriggerEnter");
-            
-            //播放爆炸动画 todoo
-            _hp -= 1;
+            //计算伤害
+            _hp -= collider.gameObject.GetComponent<Bullet>().damage;
             //
+            Debug.Log(_hp);
             
         }
     }
-    
-    
+
+    void Die()
+    {
+        _isDie = true; // 防止重复触发
+        
+        // 设置一个初始的旋转角速度
+        _rigidbody.angularVelocity = new Vector3(0, 0, 5f); // 绕Z轴旋转
+
+        // 启用重力，让物体自然下落
+        _rigidbody.useGravity = true;
+
+        // 关闭碰撞器，防止死亡后继续碰撞
+        Collider collider = GetComponent<Collider>();
+        if (collider != null)
+        {
+            collider.enabled = false;
+        }
+
+        Destroy(gameObject,_timer);  
+    }
+
+
+
+
 
 
 
