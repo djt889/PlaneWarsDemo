@@ -164,7 +164,7 @@ public class Enemy : MonoBehaviour
         _rigidbody.angularVelocity = new Vector3(0, 0, 5f); // 绕Z轴旋转
 
         // 启用重力，让物体自然下落
-        _rigidbody.useGravity = true;
+        _rigidbody.useGravity = true; 
 
         // 关闭碰撞器，防止死亡后继续碰撞
         Collider collider = GetComponent<Collider>();
