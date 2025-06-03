@@ -8,6 +8,4 @@
 子弹和飞机具备强化功能。强化会有额外攻击力。</br>
 包含死亡坠落和爆炸动画效果。敌人具备射线检测和避障功能。</br>
 
-https://github.com/user-attachments/assets/62a233e8-1895-4bee-b773-18c22177461f
-
-https://easylink.cc/25kc27
+[作品演示视频点我](https://easylink.cc/25kc27 "作品演示视频")
