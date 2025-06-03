@@ -7,5 +7,6 @@
 并且不同飞机和子弹搭配有不同的效果。例如A飞机+A子弹具有羁绊效果，增强攻击力；B飞机+A子弹则展现其他额外效果。</br>
 子弹和飞机具备强化功能。强化会有额外攻击力。</br>
 包含死亡坠落和爆炸动画效果。敌人具备射线检测和避障功能。</br>
-![image](https://github.com/user-attachments/assets/20e7463b-132c-4b76-9c52-5dcf60dde777)
+
+https://github.com/user-attachments/assets/62a233e8-1895-4bee-b773-18c22177461f
 
